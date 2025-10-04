@@ -9,11 +9,16 @@ A Django-based resource scheduling and management system that helps in assigning
 - **Smart Assignment**: Automatically suggests available resources based on skills and availability
 - **Task Tracking**: Monitor task status and assignments
 
+## Tech Stack
+
+- **Backend**: Django 4.2+
+- **Database**: SQLite (included)
+- **Frontend**: Django Templates, Bootstrap
+
 ## Prerequisites
 
 - Python 3.8+
 - pip (Python package manager)
-- SQLite (included with Python)
 
 ## Installation
 
@@ -83,24 +88,21 @@ Mediphore_SkillMatch/
    - Log in with your superuser credentials
    - Add Skills, Resources, and Projects through the admin interface
 
-2. **Using the Application**
+2. **User Interface**
    - View projects at `/projects`
    - View tasks at `/tasks`
    - Assign resources to tasks from the task detail page
 
-## Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+## Screenshots
+
+![Projects List](screenshots/projects.png)
+*Figure 1: View and manage all projects*
+
+![Task Management](screenshots/tasks.png)
+*Figure 2: Assign and track tasks*
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT
 
-## Acknowledgments
-
-- Built with Django
-- Uses Bootstrap for frontend styling
