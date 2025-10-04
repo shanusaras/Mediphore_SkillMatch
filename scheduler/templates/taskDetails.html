@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}{{ task.name }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex align-items-center gap-5">
+            <h1>{{task.name}}</h1>
+            <h4 class="text-uppercase">{{ task.status }}</h4>
+        </div>
+
+        <div class="mb-3">
+            <span> <b>Start Time - {{ task.start_time }}</b> </span> <br />
+            <span> <b>End Time - {{ task.end_time }}</b> </span>
+        </div>
+
+        <p>{{ task.description }}</p>
+
+        <p>Skill Required</p>
+        <ul>
+            {% for skill in task.required_skills.all %}
+                <li>{{ skill.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <form method="post" action="{% url 'assign_resource' task.id %}">
+            {% csrf_token %}
+            <div class="d-flex align-items-center gap-5">
+                <p class="mb-0">Resource List</p>
+                <select name="resource_list" id="resource_list">
+                    <option value="">Select Resource</option>
+                    {% for resource in matching_resources %}
+                    <option value="{{ resource.id }}">{{ resource.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-success">Assign</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

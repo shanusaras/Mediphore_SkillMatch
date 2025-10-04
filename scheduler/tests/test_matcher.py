@@ -8,18 +8,18 @@ class TestMatcher(TestCase):
     def setUp(self):
         # Create a skill
         self.python = Skill.objects.create(name="Python")
-        
+
         # Create a project
         self.project1 = Project.objects.create(
             name="Test Project",
             start_date="2023-01-01",
             end_date="2023-12-31"
         )
-        
+
         # Create a resource
         self.dev1 = Resource.objects.create(name="Python Dev", email="py@example.com")
         self.dev1.skills.add(self.python)
-        
+
         # Set availability
         now = timezone.now()
         ResourceAvailability.objects.create(
@@ -37,7 +37,7 @@ class TestMatcher(TestCase):
             end_time=timezone.now() + timedelta(days=2)
         )
         task.required_skills.add(self.python)
-        
+
         matches = resources_for_task(task)
         self.assertEqual(len(matches), 1)
         self.assertEqual(matches[0]['name'], 'Python Dev')

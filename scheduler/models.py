@@ -17,9 +17,7 @@ class Project(models.Model):
     description = models.TextField(blank=True, null=True)
     start_date = models.DateField()
     end_date = models.DateField()
-        # Automatically set when created
     created_at = models.DateTimeField(auto_now_add=True)
-        # Automatically updated when saved
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -36,34 +34,6 @@ class Resource(models.Model):
     def __str__(self):
         return f"{self.name} ({self.email})"
 
-
-# Task model represents work that needs to be done
-class Task(models.Model):
-    # (stored in DB as first value, displayed as second)
-    TASK_STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('blocked', 'Blocked'),
-    ]
-
-    name = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
-    assigned_resource=models.ForeignKey(Resource, on_delete=models.CASCADE, related_name='assigned_resource')
-    required_skills = models.ManyToManyField(Skill, related_name='tasks')
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    status = models.CharField(max_length=20, choices=TASK_STATUS_CHOICES, default='pending')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ['start_time']
-
-    def __str__(self):
-        return f"{self.name} ({self.project.name})" # e.g., "Design UI (Website Project)"
-
 # Tracks when a resource is available
 class ResourceAvailability(models.Model):
     STATUS_CHOICES = [
@@ -76,7 +46,7 @@ class ResourceAvailability(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')
-    notes = models.TextField(blank=True, null=True) # optional
+    notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -86,3 +56,29 @@ class ResourceAvailability(models.Model):
 
     def __str__(self):
         return f"{self.resource.name} - {self.start_time} to {self.end_time} ({self.status})"
+
+# Task model represents work that needs to be done
+class Task(models.Model):
+    TASK_STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('blocked', 'Blocked'),
+    ]
+
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
+    assigned_resource=models.ForeignKey(Resource, blank=True, null=True, on_delete=models.CASCADE, related_name='assigned_resource')
+    required_skills = models.ManyToManyField(Skill, related_name='tasks')
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    status = models.CharField(max_length=20, choices=TASK_STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['start_time']
+
+    def __str__(self):
+        return f"{self.name} ({self.project.name})"
