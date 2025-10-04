@@ -15,6 +15,35 @@ A Django-based resource scheduling and management system that helps in assigning
 - **Database**: SQLite (included)
 - **Frontend**: Django Templates, Bootstrap
 
+## Data Models
+
+### Project
+- `name`: Project name (String)
+- `description`: Project details (Text, optional)
+- `start_date`, `end_date`: Project timeline (Date)
+- `status`: Project status (String: 'not_started', 'in_progress', 'completed')
+- `created_at`, `updated_at`: Timestamps (auto)
+
+### Task
+- `title`: Task name (String)
+- `description`: Task details (Text, optional)
+- `start_time`, `end_time`: Task schedule (DateTime)
+- `status`: Task status (String: 'pending', 'in_progress', 'completed', 'blocked')
+- `project`: Associated project (ForeignKey)
+- `assigned_resource`: Assigned team member (ForeignKey, optional)
+- `required_skills`: Skills needed (ManyToMany to Skill)
+
+### Resource
+- `name`: Full name (String)
+- `email`: Contact email (String, unique)
+- `skills`: Skills possessed (ManyToMany to Skill)
+- `status`: Availability (String: 'available', 'unavailable', 'on_leave')
+- `created_at`, `updated_at`: Timestamps (auto)
+
+### Skill
+- `name`: Skill name (String, unique)
+- `description`: Skill details (Text, optional)
+
 ## Prerequisites
 
 - Python 3.8+
