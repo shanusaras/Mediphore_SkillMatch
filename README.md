@@ -6,14 +6,15 @@ A Django-based resource scheduling and management system that helps in assigning
 
 - **Project Management**: Create and manage projects with multiple tasks
 - **Resource Management**: Track team members and their skills
-- **Smart Assignment**: Automatically suggests available resources based on skills and availability
 - **Task Tracking**: Monitor task status and assignments
+- **Admin Interface**: Built-in Django admin for easy management
 
 ## Tech Stack
 
 - **Backend**: Django 4.2+
 - **Database**: SQLite (included)
 - **Frontend**: Django Templates, Bootstrap
+- **Dependencies**: See requirements.txt
 
 ## Data Models
 
@@ -25,13 +26,14 @@ A Django-based resource scheduling and management system that helps in assigning
 - `created_at`, `updated_at`: Timestamps (auto)
 
 ### Task
-- `title`: Task name (String)
+- `name`: Task name (String)
 - `description`: Task details (Text, optional)
 - `start_time`, `end_time`: Task schedule (DateTime)
 - `status`: Task status (String: 'pending', 'in_progress', 'completed', 'blocked')
 - `project`: Associated project (ForeignKey)
 - `assigned_resource`: Assigned team member (ForeignKey, optional)
 - `required_skills`: Skills needed (ManyToMany to Skill)
+- `created_at`, `updated_at`: Timestamps (auto)
 
 ### Resource
 - `name`: Full name (String)
@@ -44,71 +46,82 @@ A Django-based resource scheduling and management system that helps in assigning
 - `name`: Skill name (String, unique)
 - `description`: Skill details (Text, optional)
 
+### ResourceAvailability
+- `resource`: Associated resource (ForeignKey)
+- `start_time`, `end_time`: Availability window (DateTime)
+- `status`: Current status (String: 'available', 'unavailable', 'in_meeting')
+- `notes`: Additional notes (Text, optional)
+
 ## Prerequisites
 
-- Python 3.8+
 - pip (Python package manager)
+- Git (for version control)
 
 ## Installation
 
-1. **Clone the repository**
+1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/shanusaras/Mediphore_SkillMatch.git
    cd Mediphore_SkillMatch
    ```
 
-2. **Create and activate a virtual environment**
+2. Create and activate a virtual environment:
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   .\venv\Scripts\activate  # On Windows
    ```
 
-3. **Install dependencies**
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Run migrations**
+4. Run migrations:
    ```bash
    python manage.py migrate
    ```
 
-5. **Create a superuser (optional, for admin access)**
+5. Create a superuser (admin):
    ```bash
    python manage.py createsuperuser
    ```
 
-6. **Run the development server**
+6. Run the development server:
    ```bash
    python manage.py runserver
    ```
-
-7. **Access the application**
-   - Main app: http://127.0.0.1:8000/
-   - Admin: http://127.0.0.1:8000/admin/
+7. Access the application:
+   - Admin interface: `http://127.0.0.1:8000/admin/`
+   - Main application: `http://127.0.0.1:8000/`
 
 ## Project Structure
-
 ```
-Mediphore_SkillMatch/
-├── manage.py           # Django's command-line utility
-├── requirements.txt    # Project dependencies
-├── mediphore_task/     # Project configuration
+.
+├── mediphore_task/         # Project configuration
 │   ├── __init__.py
-│   ├── settings.py     # Django settings
-│   ├── urls.py        # Main URL routing
-│   └── wsgi.py        # WSGI configuration
-└── scheduler/         # Main application
-    ├── migrations/    # Database migrations
-    ├── services/      # Business logic
-    ├── templates/     # HTML templates
-    ├── __init__.py
-    ├── admin.py      # Admin interface
-    ├── apps.py       # App configuration
-    ├── models.py     # Database models
-    ├── urls.py       # App URL routing
-    └── views.py      # Request handlers
+│   ├── asgi.py           # ASGI configuration
+│   ├── settings.py        # Django settings
+│   ├── urls.py           # Main URL routing
+│   └── wsgi.py           # WSGI configuration
+│
+├── scheduler/             # Main application
+│   ├── migrations/       # Database migrations
+│   ├── templates/        # HTML templates
+│   │   ├── base.html        # Base template
+│   │   ├── projects.html    # Projects listing
+│   │   ├── tasks.html       # Tasks listing
+│   │   └── taskDetails.html # Task details
+│   ├── __init__.py
+│   ├── admin.py          # Admin interface
+│   ├── apps.py           # App configuration
+│   ├── models.py         # Database models
+│   ├── urls.py           # App URL routing
+│   └── views.py          # Request handlers
+│
+├── manage.py            # Django command-line utility
+└── requirements.txt     # Python dependencies
 ```
+
 
 ## Usage
 
