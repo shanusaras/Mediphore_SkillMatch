@@ -179,6 +179,12 @@ A Django-based resource scheduling and management system that helps in assigning
 
 ## System Flow: Resource Assignment
 
+<!-- Sequence showing the resource assignment flow:
+1. User initiates action
+2. Server validates and updates data
+3. User sees updated state
+-->
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -188,12 +194,9 @@ sequenceDiagram
 
     User->>Browser: Clicks "Assign Resource"
     Browser->>Server: POST /task/1/assign
-    Server->>Database: Get task and resource
-    Database-->>Server: Return data
-    Server->>Database: Update task assignment
-    Database-->>Server: Confirm update
-    Server->>Server: Update availability
-    Server-->>Browser: Redirect to task page
+    Server->>Database: Verify & update records
+    Database-->>Server: Confirmation
+    Server-->>Browser: Redirect to /task/1
     Browser->>Server: GET /task/1
     Server-->>Browser: Show updated task
     Browser-->>User: Display confirmation
