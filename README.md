@@ -130,9 +130,17 @@ A Django-based resource scheduling and management system that helps in assigning
 │   ├── admin.py          # Admin interface
 │   ├── apps.py           # App configuration
 │   ├── models.py         # Database models
-│   ├── urls.py           # App URL routing
-│   └── views.py          # Request handlers
+│   ├── urls.py          # App URL routing
+│   └── views.py         # Request handlers
 │
+├── images/               # Screenshots for documentation
+│   ├── admin-interface.png
+│   ├── projects.png
+│   ├── tasks.png
+│   └── task-detail.png
+│
+├── .gitignore           # Git ignore file
+├── db.sqlite3           # SQLite database
 ├── manage.py            # Django command-line utility
 └── requirements.txt     # Python dependencies
 ```
@@ -153,11 +161,21 @@ A Django-based resource scheduling and management system that helps in assigning
 
 ## Screenshots
 
-![Projects List](screenshots/projects.png)
-*Figure 1: View and manage all projects*
+### Admin Interface
+![Admin Dashboard](images/admin-interface.png)
+*Manage all data through the admin panel*
 
-![Task Management](screenshots/tasks.png)
-*Figure 2: Assign and track tasks*
+### Projects View
+![Projects List](images/projects.png)
+*View and manage all projects*
+
+### Tasks Overview
+![Task Management](images/tasks.png)
+*Track and assign tasks across projects*
+
+### Task Details
+![Task Assignment](images/task-detail.png)
+*Assign resources and update task status*
 
 ## System Flow: Resource Assignment
 
