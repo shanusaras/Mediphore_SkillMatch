@@ -158,6 +158,81 @@ A Django-based resource scheduling and management system that helps in assigning
 ![Task Management](screenshots/tasks.png)
 *Figure 2: Assign and track tasks*
 
+## System Flow: Resource Assignment
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Browser
+    participant View as "Django View"
+    participant Model as "Django ORM"
+    participant DB as "Database"
+    participant Template
+    
+    %% Initial Page Load
+    User->>+Browser: Navigates to Task Detail Page
+    Browser->>+View: GET /task-detail/1/
+    
+    %% Task and Resource Retrieval
+    View->>+Model: task = Task.objects.get(pk=1)
+    Model->>+DB: SELECT * FROM scheduler_task WHERE id = 1
+    DB-->>-Model: Task data
+    
+    %% Get Matching Resources
+    View->>+Model: matching_resources = Resource.objects.filter(
+        skills__in=task.required_skills.all(),
+        availabilities__start_time__lte=task.start_time,
+        availabilities__end_time__gte=task.end_time,
+        availabilities__status='available'
+    ).distinct()
+    
+    Model->>+DB: Complex JOIN query for matching resources
+    DB-->>-Model: Matching resources data
+    Model-->>-View: QuerySet of matching resources
+    
+    %% Template Rendering
+    View->>+Template: Render taskDetails.html with context
+    Template-->>-View: Rendered HTML
+    View-->>-Browser: HTTP 200 OK
+    Browser-->>-User: Display Task Detail Page
+    
+    %% Resource Assignment
+    User->>+Browser: Selects resource and clicks "Assign"
+    Browser->>+View: POST /task/1/assign/ {resource_id: 2, csrf_token: ...}
+    
+    %% Update Task Assignment
+    View->>+Model: task = Task.objects.get(pk=1)
+    View->>+Model: resource = Resource.objects.get(id=2)
+    
+    %% Update Task Status
+    View->>+Model: task.assigned_resource = resource
+    View->>+Model: task.status = 'in_progress'
+    View->>+Model: task.save()
+    Model->>+DB: UPDATE scheduler_task SET assigned_resource_id=2, status='in_progress' WHERE id=1
+    DB-->>-Model: Update successful
+    
+    %% Update Resource Availability
+    View->>+Model: availability = ResourceAvailability.objects.filter(
+        resource=resource,
+        start_time__lte=task.start_time,
+        end_time__gte=task.end_time,
+        status="available"
+    ).first()
+    
+    alt Availability Found
+        View->>+Model: availability.status = 'unavailable'
+        View->>+Model: availability.save()
+        Model->>+DB: UPDATE scheduler_resourceavailability SET status='unavailable' WHERE id=?
+        DB-->>-Model: Update successful
+    end
+    
+    %% Redirect to Updated Task
+    View-->>-Browser: HTTP 302 Redirect to /task-detail/1/
+    Browser->>+View: GET /task-detail/1/
+    View-->>-Browser: HTTP 200 OK with updated task
+    Browser-->>-User: Display Updated Task Page with Confirmation
+```
+
 ## License
 
 MIT
