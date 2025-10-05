@@ -179,11 +179,10 @@ A Django-based resource scheduling and management system that helps in assigning
 
 ## System Flow: Resource Assignment
 
-<!-- Sequence showing the resource assignment flow:
-1. User initiates action
-2. Server validates and updates data
-3. User sees updated state
--->
+### Flow Overview
+1. **User initiates action**
+2. **Server validates and updates data**
+3. **User sees updated state**
 
 ```mermaid
 sequenceDiagram
