@@ -7,3 +7,4 @@ urlpatterns = [
     path('task-detail/<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
     path('task/<int:pk>/assign/', AssignResourceView.as_view(), name='assign_resource'),
 ]
+    

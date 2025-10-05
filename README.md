@@ -1,6 +1,20 @@
 # Mediphore SkillMatch
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A Django-based resource scheduling and management system that helps in assigning the right resources to tasks based on their skills and availability.
+
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Data Models](#data-models)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Project Structure](#project-structure)
+- [Usage](#usage)
+- [License](#license)
+
 
 ## Features
 
