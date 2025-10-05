@@ -13,6 +13,7 @@ A Django-based resource scheduling and management system that helps in assigning
 - [Installation](#installation)
 - [Project Structure](#project-structure)
 - [Usage](#usage)
+- [System Flow](#system-flow-resource-assignment)
 - [License](#license)
 
 
