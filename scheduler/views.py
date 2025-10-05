@@ -30,6 +30,7 @@ class ProjectTaskListView(ListView):
         context['project'] = get_object_or_404(Project, id=project_id)
         return context
 
+# Handles GET requests to display task details and available resources
 class TaskDetailView(DetailView):
     model = Task
     template_name = 'taskDetails.html'
@@ -61,7 +62,7 @@ class TaskDetailView(DetailView):
         # for skill in task.required_skills.all():
         #     matching_resources = matching_resources.filter(skills=skill)
 
-       
+# Handles POST requests to assign a resource to a task
 class AssignResourceView(View):
     def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
