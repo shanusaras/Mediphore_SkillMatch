@@ -10,11 +10,6 @@ class ProjectListView(ListView):
     template_name = 'projects.html'
     context_object_name = 'projects'
 
-class TaskListView(ListView):
-    model = Task
-    template_name = 'tasks.html'
-    context_object_name = 'tasks'
-
 class ProjectTaskListView(ListView):
     model = Task
     template_name = 'tasks.html'
