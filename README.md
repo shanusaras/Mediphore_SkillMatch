@@ -83,7 +83,7 @@ A Django-based resource scheduling and management system that helps in assigning
 2. Create and activate a virtual environment:
    ```bash
    python -m venv venv
-   .\venv\Scripts\activate  # On Windows
+   .\.venv\Scripts\activate  # On Windows
    ```
 
 3. Install dependencies:
